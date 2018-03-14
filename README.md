@@ -26,6 +26,6 @@ It will also *destructively* copy over your existing `~/.bash_profile` and `~/.v
 
 I really like *ShiftIt*, but getting the right version that supports thirds can be a bit annoying because you want a specific fork. This is the one you'll want: https://libraries.io/github/onsi/ShiftIt
 
-I also really like switching over my caps lock key to be my ESC key when I tap it, and my CTRL key when I hold it. Karabiner (https://pqrs.org/osx/karabiner/) is really great for this. You'll want to install it and then get the recipe for that configuration separately from within the software.
+I also really like switching over my caps lock key to be my ESC key when I tap it, and my CTRL key when I hold it. Karabiner (https://pqrs.org/osx/karabiner/) is really great for this. You'll want to install it and then get the recipe for that configuration separately from within the software, which is here: karabiner://karabiner/assets/complex_modifications/import?url=https%3A%2F%2Fpqrs.org%2Fosx%2Fkarabiner%2Fcomplex_modifications%2Fjson%2Fcaps_lock.json
 
 Setup iTerm2 to use the solarized theme manually.
