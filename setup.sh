@@ -12,6 +12,16 @@ else
 	brew update
 fi
 
+which -s git
+if [[ $? != 0 ]] ; then
+  brew install git
+else
+	echo "Updating Homebrew."
+	brew update
+fi
+
+brew install bash-completion
+
 which -s yarn
 if [[ $? != 0 ]] ; then
   echo "Installing yarn..."
