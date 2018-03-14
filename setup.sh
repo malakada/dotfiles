@@ -51,6 +51,16 @@ else
 	echo "mvim already installed."
 fi
 
+which -s rbenv
+if [[ $? != 0 ]] ; then
+  echo "Install rbenv..."
+  brew install rbenv
+  brew link rbenv
+  installedPackages+=(`rbenv`)
+else
+  echo "rbenv already installed."
+fi
+
 which -s tree
 if [[ $? != 0 ]] ; then
 	echo "Installing tree..."
@@ -78,7 +88,7 @@ else
 fi
 
 if [ ! -f ~/.vimrc ] ; then
-	echo "Coping over .vimrc file..."
+	echo "Copying over .vimrc file..."
 	cp ./local.vimrc ~/.vimrc
   vim +PluginInstall +qall
   mkdir ~/.vim/colors
@@ -99,9 +109,9 @@ else
 fi
 
 if [ ! -f ~/.bash_profile ] ; then
-	echo "Coping over .bash_profile file..."
+	echo "Copying over .bash_profile file..."
 	cp ./local.bash_profile ~/.bash_profile
-	installedPackages+=(`.bash_profile file`)
+	installedPackages+=(`local bash_profile file`)
 else
 	echo "~/.bash_profile already exists, skipping."
 fi
@@ -111,5 +121,7 @@ for update in "${installedPackages[@]}"
 do
 	echo $update
 done
+
+source ~/.bash_profile
 
 echo "Have a great day!"
