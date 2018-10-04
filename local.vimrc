@@ -8,13 +8,15 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
-Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'w0rp/ale'
 Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
@@ -25,7 +27,18 @@ Plugin 'gregsexton/matchtag'
 Plugin 'ap/vim-css-color'
 Plugin 'mxw/vim-jsx'
 Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'othree/javascript-libraries-syntax.vim'
+" Plugin 'othree/javascript-libraries-syntax.vim'
+
+" Tell vim that *.es6 files should be highlighted as JS
+au BufNewFile,BufRead *.es6 set filetype=javascript
+
+" ale configuration
+" let g:ale_linters = {
+"       \  'javascript': ['eslint'],
+"       \  'ruby': ['rubocop'],
+"       \}
+" let g:ale_sign_column_always = 1
+" let g:airline#extensions#ale#enabled = 1
 
 " NERDtree customization
 autocmd StdinReadPre * let s:std_in=1
@@ -139,3 +152,7 @@ set number
 
 " Get rid of scrollbars always
 set guioptions=
+
+" For ctrlp to work in large Rails repos
+let g:ctrlp_max_files=0
+let g:ctrlp_max_depth=40

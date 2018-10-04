@@ -89,6 +89,15 @@ else
 	echo "ag already installed."
 fi
 
+which -s fzf
+if [[ $? != 0 ]] ; then
+	echo "Installing fzf..."
+	brew install fzf
+	installedPackages+=(`fzf`)
+else
+	echo "fzf already installed."
+fi
+
 if [ ! -f ~/.vim/bundles/Vundle.vim ] ; then
 	echo "Installing vundle..."
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
