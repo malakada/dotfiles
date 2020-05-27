@@ -1,44 +1,45 @@
 set nocompatible " required
 filetype off     " required
+:let mapleader = ","
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
 call vundle#begin()
+
+" turn off auditory and visual bells
+set vb
+set visualbell
+set t_vb=
+autocmd! GUIEnter * set vb t_vb=
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-fugitive'
-" Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'junegunn/fzf'
-Plugin 'tomtom/tcomment_vim'
+" Plugin 'heavenshell/vim-jsdoc'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'w0rp/ale'
-Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
-" Plugin 'pangloss/vim-javascript'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'gregsexton/matchtag'
-" Plugin 'valloric/matchtagalways' " use this one if gregsexton/matchtag sucks
 Plugin 'ap/vim-css-color'
-Plugin 'mxw/vim-jsx'
+Plugin 'bling/vim-airline'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'junegunn/fzf'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'maxmellon/vim-jsx-pretty'
-" Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'preservim/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'valloric/YouCompleteMe'
+Plugin 'valloric/matchtagalways'
 
 " Tell vim that *.es6 files should be highlighted as JS
 au BufNewFile,BufRead *.es6 set filetype=javascript
-
-" ale configuration
-" let g:ale_linters = {
-"       \  'javascript': ['eslint'],
-"       \  'ruby': ['rubocop'],
-"       \}
-" let g:ale_sign_column_always = 1
-" let g:airline#extensions#ale#enabled = 1
 
 " NERDtree customization
 autocmd StdinReadPre * let s:std_in=1
@@ -52,20 +53,32 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
 let g:syntastic_javascript_checkers=['eslint']
+
+" let g:jsdoc_enable_es6 = 1
+" command! -register JSD call jsdoc#insert()
+
+let g:javascript_plugin_jsdoc = 1
+
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCompactSexyComs = 0
+let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**', 'right': '*/' } }
+let g:NERDSpaceDelims = 1
+let b:NERDSexyComMarker = ''
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+filetype plugin on
 filetype plugin indent on    " required
 
 syntax enable
-set background=dark
+set background=light
 colorscheme solarized
 
 "Always show current position
@@ -82,17 +95,6 @@ set hlsearch
 
 " Makes search act like search in modern browsers
 set incsearch
-
-" Show matching brackets when text indicator is over them
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set mat=2
-
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
@@ -128,7 +130,6 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 
-
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -139,7 +140,7 @@ fun! CleanExtraSpaces()
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+    autocmd BufWritePre *.js,*.jsx,*.md,*.ts,*.tsx :call CleanExtraSpaces()
 endif
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
@@ -152,7 +153,3 @@ set number
 
 " Get rid of scrollbars always
 set guioptions=
-
-" For ctrlp to work in large Rails repos
-let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=40
