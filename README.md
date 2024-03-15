@@ -1,31 +1,55 @@
-## What is this
+# dotfiles
 
-This is a little shell script that will go through and attempt to download and install some command line utilities that I like to use, as well as some basic configuration.
+These dotfiles are hyper-specific to my personal dev environment. If it's helpful for you to copy/modify then awesome, but if not no worries. :)
 
-It will install:
+It installs essential tools and applications such as:
 
-- homebrew
-- yarn
-- npm
-- eslint globally via npm
-- z (https://github.com/rupa/z)
-- macvim
-- rbenv
-- tree (http://mama.indstate.edu/users/ice/tree/)
-- ag (https://github.com/ggreer/the_silver_searcher)
-- vundle
+* Hack Nerd Font Mono
+* Homebrew
+* Karabiner-Elements
+* Neovim
+* Yarn
+* ag (the_silver_searcher)
+* eslint
+* fzf
+* npm
+* pynvim
+* rbenv
+* tree
+* z
 
-It will also *destructively* copy over your existing `~/.bash_profile` and `~/.vimrc`.
+Additionally, it configures zsh and nvim by copying pre-defined configuration files from this repository (non-destructively).
 
-## Instructions
+## Prerequisites
 
-1. Maybe go install iTerm2 if you're into that.
-1. Then open that up and run `sh ./setup.sh`.
+- macOS operating system
+- Command Line Tools for Xcode: Install by running `xcode-select --install` in your terminal if you haven't already.
 
-## Some other things you may want to go get or setup manually
+## Installation
 
-I really like *ShiftIt*, but getting the right version that supports thirds can be a bit annoying because you want a specific fork. This is the one you'll want: https://libraries.io/github/onsi/ShiftIt
+1. **Clone the Repository**: First, clone this repository to your local machine:
 
-I also really like switching over my caps lock key to be my ESC key when I tap it, and my CTRL key when I hold it. Karabiner (https://pqrs.org/osx/karabiner/) is really great for this. You'll want to install it and then get the recipe for that configuration separately from within the software, which is here: karabiner://karabiner/assets/complex_modifications/import?url=https%3A%2F%2Fpqrs.org%2Fosx%2Fkarabiner%2Fcomplex_modifications%2Fjson%2Fcaps_lock.json
+    ```bash
+    git clone git@github.com:malakada/dotfiles.git
+    cd dotfiles
+    ```
 
-Setup iTerm2 to use the solarized theme manually.
+2. **Run the Setup Script**: Execute the setup script with:
+
+    ```bash
+    ./setup.sh
+    ```
+
+    It'll tell you what it's doing along the way. :)
+
+## Manual Configuration Steps
+
+Some configurations cannot be automated through the script and require manual steps. Helper text is included in the script output to guide you through these steps.
+
+### iTerm2
+
+- **Font Configuration**: Manually set iTerm2 to use Hack Nerd Font Mono, weight Regular, size 13, and line height value of 101 through iTerm2's preferences (`iTerm2 > Preferences > Profiles > Text > Font`).
+
+- **Color Scheme**: Set iTerm2's color preset to Solarized Dark via `iTerm2 > Preferences > Profiles > Colors > Color Presets`.
+
+- **Appearance options**: Enable 'Hide scrollbars' in `iTerm2 > Preferences > Appearance > Windows`. Also, enable 'Preserve window size when tab bar shows or hides' and 'Support basic HTML tags in tab titles' in `iTerm2 > Preferences > Appearance > Tabs`.

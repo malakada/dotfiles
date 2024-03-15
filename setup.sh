@@ -1,146 +1,87 @@
 #!/bin/bash
 
-installedPackages=()
+# Echoing each step
+echo "Starting setup..."
 
-which -s brew
-if [[ $? != 0 ]] ; then
-	echo "Installing Homebrew..."
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	installedPackages+=(`brew`)
+# Check for and install Homebrew
+if ! command -v brew &> /dev/null
+then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-	echo "Updating Homebrew."
-	brew update
+    echo "Homebrew already installed. Skipping..."
 fi
 
-which -s git
-if [[ $? != 0 ]] ; then
-  brew install git
+# Update Homebrew and install packages
+echo "Updating Homebrew and installing packages..."
+brew update
+brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python
+$(brew --prefix)/opt/fzf/install # Install shell extensions for fzf
+
+
+echo "Installing Karabiner-Elements..."
+
+brew install --cask karabiner-elements
+KARABINER_CONFIG_DIR="${HOME}/.config/karabiner"
+KARABINER_CONFIG_FILE="${KARABINER_CONFIG_DIR}/karabiner.json"
+
+mkdir -p "${KARABINER_CONFIG_DIR}"
+
+# Check if Karabiner config file exists
+if [ ! -f "${KARABINER_CONFIG_FILE}" ]; then
+    echo "Karabiner-Elements config not found. Creating a default config file..."
+    # Create a new default config file if it doesn't exist
+    cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
 else
-	echo "Updating Homebrew."
-	brew update
+    echo "Karabiner-Elements config found, moving to karabiner.json.old"
+    mv "${KARABINER_CONFIG_FILE}" "${KARABINER_CONFIG_FILE}.old"
+    cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
 fi
 
-brew install bash-completion
+echo "Karabiner-Elements setup complete."
 
-which -s yarn
-if [[ $? != 0 ]] ; then
-  echo "Installing yarn..."
-  brew install yarn
-  installedPackages+=(`yarn`)
-else
-  echo "yarn already installed."
-fi
+# Install Hack Nerd Font
+echo "Installing Hack Nerd Font..."
+FONT_DIR="$HOME/Library/Fonts"
+curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip -o "$FONT_DIR/Hack.zip"
+unzip -o "$FONT_DIR/Hack.zip" -d "$FONT_DIR"
+rm "$FONT_DIR/Hack.zip"
 
-which -s npm
-if [[ $? != 0 ]] ; then
-  echo "Installing npm..."
-  brew install npm
-  installedPackages+=(`npm`)
-else
-  echo "npm already installed."
-fi
+# Install global npm packages
+echo "Installing eslint globally..."
+npm install -g eslint
 
-npm i eslint --global
-
-which -s z
-if [[ $? != 0 ]] ; then
-	echo "Installing z..."
-	brew install z
-	installedPackages+=(`z`)
-else
-	echo "z already installed."
-fi
-
-which -s mvim
-if [[ $? != 0 ]] ; then
-	echo "Installing mvim..."
-	brew install macvim
-	brew link macvim
-	installedPackages+=(`mvim`)
-else
-	echo "mvim already installed."
-fi
-
-which -s rbenv
-if [[ $? != 0 ]] ; then
-  echo "Install rbenv..."
-  brew install rbenv
-  brew link rbenv
-  installedPackages+=(`rbenv`)
-else
-  echo "rbenv already installed."
-fi
-
-which -s tree
-if [[ $? != 0 ]] ; then
-	echo "Installing tree..."
-	brew install tree
-	installedPackages+=(`tree`)
-else
-	echo "tree already installed."
-fi
-
-which -s ag
-if [[ $? != 0 ]] ; then
-	echo "Installing ag..."
-	brew install the_silver_searcher
-	installedPackages+=(`ag`)
-else
-	echo "ag already installed."
-fi
-
-which -s fzf
-if [[ $? != 0 ]] ; then
-	echo "Installing fzf..."
-	brew install fzf
-	installedPackages+=(`fzf`)
-else
-	echo "fzf already installed."
-fi
-
-if [ ! -f ~/.vim/bundles/Vundle.vim ] ; then
-	echo "Installing vundle..."
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-	installedPackages+=(`vundle`)
-else
-	echo "vundle already installed."
-fi
-
-if [ ! -f ~/.vimrc ] ; then
-	echo "Copying over .vimrc file..."
-	cp ./local.vimrc ~/.vimrc
-  vim +PluginInstall +qall
-  mkdir ~/.vim/colors
-  cp ~/.vim/bundle/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/
-	installedPackages+=(`.vimrc file`)
-else
-	echo "~/.vimrc already exists, skipping."
-fi
-
-if [ ! -f ~/.git-completion.bash ] ; then
-	echo "Enabling git branch autocompletion..."
-	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
-	cp ./local.vimrc ~/.vimrc
-	chmod -X ~/.git-completion.bash
-	installedPackages+=(`git branch autocomplete`)
-else
-	echo "git branch autocomplete already installed."
-fi
-
-if [ ! -f ~/.bash_profile ] ; then
-	echo "Copying over .bash_profile file..."
-	cp ./local.bash_profile ~/.bash_profile
-	installedPackages+=(`local bash_profile file`)
-else
-	echo "~/.bash_profile already exists, skipping."
-fi
-
-echo "Installed:"
-for update in "${installedPackages[@]}"
-do
-	echo $update
+# Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
+echo "Configuring zsh..."
+for file in .zshrc .zshenv; do
+    if [ -f "${HOME}/${file}" ]; then
+        echo "Found existing ${file}, moving to ${file}.old"
+        mv "${HOME}/${file}" "${HOME}/${file}.old"
+    fi
+    cp "./${file}" "${HOME}/${file}"
 done
 
-source ~/.bash_profile
+echo "Configuring nvim..."
 
-echo "Have a great day!"
+echo "Creating virtual environment for nvim's python dependencies..."
+/opt/homebrew/bin/python3 -m venv "${HOME}/.config/nvim/env"
+
+echo "Installing pynvim..."
+~/.config/nvim/env/bin/pip install pynvim
+
+if [ -d "${HOME}/.config/nvim" ]; then
+		echo "Found existing nvim directory, moving to nvim.old"
+		mv "${HOME}/.config/nvim" "${HOME}/.config/nvim.old"
+fi
+cp -r "./nvim" "${HOME}/.config/nvim"
+
+echo "Setup complete\!"
+echo " "
+echo "Be sure to configure iTerm2:"
+echo "\u2022 Appearance settings"
+echo "  \u2514\u2500 Windows: enable 'Hide scrollbars'"
+echo "  \u2514\u2500 Tabs: enable 'Preserve window size when tab bar shows or hides' and 'Support basic HTML tags in tab titles'"
+echo "  \u2514\u2500 Dimming: change dimming amount to 15 and enable 'Dim only text, not background'"
+echo "\u2022 Profile settings"
+echo "  \u2514\u2500 Colors: select 'Solarized Dark' in color presets"
+echo "  \u2514\u2500 Text: use the Hack Nerd Font with regular weight, 13pt, letter spacing 100, line spacing 101 and enable 'Use ligatures'"
