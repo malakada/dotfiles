@@ -15,6 +15,7 @@ It installs essential tools and applications such as:
 * npm
 * pynvim
 * rbenv
+* Rosetta 2 (for M1 Macs)
 * tree
 * z
 

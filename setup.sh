@@ -12,12 +12,28 @@ else
     echo "Homebrew already installed. Skipping..."
 fi
 
+# Install Hack Nerd Font
+echo "Installing Hack Nerd Font..."
+FONT_DIR="$HOME/Library/Fonts"
+curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip -o "$FONT_DIR/Hack.zip"
+unzip -o "$FONT_DIR/Hack.zip" -d "$FONT_DIR"
+rm "$FONT_DIR/Hack.zip"
+
 # Update Homebrew and install packages
 echo "Updating Homebrew and installing packages..."
 brew update
-brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python
+brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm
 $(brew --prefix)/opt/fzf/install # Install shell extensions for fzf
 
+# Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
+echo "Configuring zsh..."
+for file in .zshrc .zshenv; do
+    if [ -f "${HOME}/${file}" ]; then
+        echo "Found existing ${file}, moving to ${file}.old"
+        mv "${HOME}/${file}" "${HOME}/${file}.old"
+    fi
+    cp "./${file}" "${HOME}/${file}"
+done
 
 echo "Installing Karabiner-Elements..."
 
@@ -40,29 +56,18 @@ fi
 
 echo "Karabiner-Elements setup complete."
 
-# Install Hack Nerd Font
-echo "Installing Hack Nerd Font..."
-FONT_DIR="$HOME/Library/Fonts"
-curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip -o "$FONT_DIR/Hack.zip"
-unzip -o "$FONT_DIR/Hack.zip" -d "$FONT_DIR"
-rm "$FONT_DIR/Hack.zip"
+echo "Configuring NVM & installing LTS Node..."
+mkdir -p "${HOME}/.nvm"
+nvm install --lts
+
+echo "Installing Rosetta 2..."
+softwareupdate --install-rosetta --agree-to-license
 
 # Install global npm packages
 echo "Installing eslint globally..."
 npm install -g eslint
 
-# Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
-echo "Configuring zsh..."
-for file in .zshrc .zshenv; do
-    if [ -f "${HOME}/${file}" ]; then
-        echo "Found existing ${file}, moving to ${file}.old"
-        mv "${HOME}/${file}" "${HOME}/${file}.old"
-    fi
-    cp "./${file}" "${HOME}/${file}"
-done
-
 echo "Configuring nvim..."
-
 echo "Creating virtual environment for nvim's python dependencies..."
 /opt/homebrew/bin/python3 -m venv "${HOME}/.config/nvim/env"
 
