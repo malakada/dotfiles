@@ -176,6 +176,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
+-- Always show hidden files
+vim.g.NERDTreeShowHidden = 1
+
 -- Custom autocommands for NERDTree and file type settings
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
   pattern = "*.es6",
