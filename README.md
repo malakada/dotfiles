@@ -11,6 +11,7 @@ It installs essential tools and applications such as:
 * Yarn
 * ag (the_silver_searcher)
 * eslint
+* fd
 * fzf
 * npm
 * pynvim
