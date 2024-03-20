@@ -22,7 +22,7 @@ rm "$FONT_DIR/Hack.zip"
 # Update Homebrew and install packages
 echo "Updating Homebrew and installing packages..."
 brew update
-brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm
+brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm openssl@1.1 libpq ripgrep
 $(brew --prefix)/opt/fzf/install # Install shell extensions for fzf
 
 # Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
@@ -79,6 +79,21 @@ if [ -d "${HOME}/.config/nvim" ]; then
 		mv "${HOME}/.config/nvim" "${HOME}/.config/nvim.old"
 fi
 cp -r "./nvim" "${HOME}/.config/nvim"
+
+echo "Installing Rails environment..."
+gem install bundler
+
+# install all latest stable versions of ruby from rbenv install -l
+LATEST_RUBY_VERSION=$(rbenv install -l | grep -v - | tail -1)
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" rbenv install $LATEST_RUBY_VERSION
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" rbenv install 3.3.0
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" rbenv install 3.2.3
+rbenv global 3.3.0
+gem install bundler
+
+# install rust
+echo "Installing Rust..."
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 echo "Setup complete\!"
 echo " "

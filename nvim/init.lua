@@ -16,8 +16,17 @@ require("lazy").setup({
   "ap/vim-css-color",
   "vim-airline/vim-airline",
   {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  },
+  {
     "nvim-telescope/telescope.nvim", -- Ensure Telescope is included
-    requires = { "nvim-lua/plenary.nvim" } -- Include Plenary as it's a dependency for Telescope
+    tag = "0.1.6",
+    requires = { "nvim-lua/plenary.nvim" }, -- Include Plenary as it's a dependency for Telescope
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
   },
   {
     "danielfalk/smart-open.nvim",
@@ -27,7 +36,7 @@ require("lazy").setup({
     end,
     dependencies = {
       "kkharji/sqlite.lua",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-fzy-native.nvim",
       -- Explicitly include plenary and telescope here to ensure they're recognized as dependencies
       "nvim-lua/plenary.nvim",
@@ -49,9 +58,41 @@ require("lazy").setup({
   "bronson/vim-trailing-whitespace",
 })
 
+--------------------
+-- Basic settings --
+--------------------
+
+-- Set the leader key
 vim.g.mapleader = ","
+
+-- Set the title of the window
 vim.o.t_vb = ""
+
+-- Set the timeout for key codes
 vim.o.tm = 500
+
+-- Don't autocomment new lines after a comment
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'r', 'o' })
+  end,
+})
+
+-- Always show the current position
+vim.o.ruler = true
+
+-- Turn backup off
+vim.o.backup = false
+
+-- Turn write backup off
+vim.o.writebackup = false
+
+-- Turn off swapfile
+vim.o.swapfile = false
+
+-- Set line numbers always
+vim.wo.number = true
 
 -- Always show current position
 vim.o.ruler = true
@@ -209,21 +250,56 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = clean_extra_spaces,
 })
 
---------------------
--- Basic settings --
---------------------
+---------------------
+-- Telescope setup --
+---------------------
 
--- Always show the current position
-vim.o.ruler = true
+-- Load telescope
+require("telescope").setup({
+  defaults = {
+    prompt_prefix = "❯ ",
+    selection_caret = "❯ ",
+    layout_config = {
+      prompt_position = "top",
+    },
+  },
+})
 
--- Turn backup off
-vim.o.backup = false
+-- Load telescope extensions
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("fzy_native")
+require("telescope").load_extension("smart_open")
 
--- Turn write backup off
-vim.o.writebackup = false
+-- Map telescope keybindings to leader
+vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>lua require("telescope.builtin").oldfiles()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>lua require("telescope.builtin").tags()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fi', '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fm', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fc', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fw', '<cmd>lua require("telescope.builtin").lsp_workspace_diagnostics()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fl', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', {noremap = true, silent = true})
 
--- Turn off swapfile
-vim.o.swapfile = false
+-- Change telescope to use ag/the_silver_searcher instead of vimgrep
+vim.api.nvim_set_var('telescope', {
+  pickers = {
+    find_files = {
+      find_command = {'ag', '--hidden', '--ignore', '--files', 'prompt_prefix=🔍'},
+    },
+    live_grep = {
+      find_command = {'ag', '--hidden', '--ignore', '--vimgrep', 'prompt_prefix=🔍'},
+    },
+  },
+})
 
--- Set line numbers always
-vim.wo.number = true
+-- Load telescope extensions
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("smart_open")
+

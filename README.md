@@ -15,11 +15,14 @@ It installs essential tools and applications such as:
 * npm
 * pynvim
 * rbenv
+* ripgrep
 * Rosetta 2 (for M1 Macs)
 * tree
 * z
 
 Additionally, it configures zsh and nvim by copying pre-defined configuration files from this repository (non-destructively).
+
+When you set up Rust, just use the default settings. You may need to remove an extraneous path value that it adds to `./zshenv`.
 
 ## Prerequisites
 
