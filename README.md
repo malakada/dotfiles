@@ -15,6 +15,8 @@ It installs essential tools and applications such as:
 * fzf
 * npm
 * pynvim
+* python3
+* noTunes
 * rbenv
 * ripgrep
 * Rosetta 2 (for M1 Macs)
@@ -24,6 +26,14 @@ It installs essential tools and applications such as:
 Additionally, it configures zsh and nvim by copying pre-defined configuration files from this repository (non-destructively).
 
 When you set up Rust, just use the default settings. You may need to remove an extraneous path value that it adds to `./zshenv`.
+
+Afterwards, you'll want to enable noTunes to run by doing:
+1. Navigate to System Settings
+2. Select General
+3. Select Login Items
+4. Click the + under Open at Login and select noTunes (in Applications).
+
+For more info, see: https://github.com/tombonez/noTunes
 
 ## Prerequisites
 

@@ -25,6 +25,10 @@ brew update
 brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm openssl@1.1 libpq ripgrep fd
 $(brew --prefix)/opt/fzf/install # Install shell extensions for fzf
 
+# Disable Apple Music because yuck
+echo "Disabling Apple Music..."
+brew install --cask notunes
+
 # Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
 echo "Configuring zsh..."
 for file in .zshrc .zshenv; do
