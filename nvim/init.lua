@@ -125,7 +125,7 @@ vim.o.tabstop = 2
 
 -- Syntax enable and colorscheme
 vim.cmd [[syntax enable]]
-vim.o.background = "dark"
+vim.o.background = "dark" -- solarizedlight solarizeddark solarized dark light
 vim.cmd [[colorscheme solarized]]
 
 -- Set the clipboard to use the system clipboard
@@ -165,6 +165,29 @@ vim.api.nvim_create_autocmd("GUIEnter", {
   pattern = "*",
   command = "set vb t_vb="
 })
+
+-----------------------
+-- Devicons settings --
+-----------------------
+
+-- Reduce padding for devicons in NERDTree (default 1)
+vim.g.WebDevIconsUnicodeGlyphDoubleWidth = 0
+
+-- whether or not to show the nerdtree brackets around flags (default 1)
+vim.g.webdevicons_conceal_nerdtree_brackets = 1
+
+-- the amount of space to use after the glyph character (default ' ')
+vim.g.WebDevIconsNerdTreeAfterGlyphPadding = ''
+
+-- The amount of space to use after the glyph character in vim-airline tabline(default ' ')
+vim.g.WebDevIconsTabAirLineAfterGlyphPadding = ''
+
+-- The amount of space to use before the glyph character in vim-airline tabline(default ' ')
+vim.g.WebDevIconsTabAirLineBeforeGlyphPadding = ''
+
+-- Force extra padding in NERDTree so that the filetype icons line up vertically
+vim.g.WebDevIconsNerdTreeGitPluginForceVAlign = 1
+
 
 -----------------------------
 -- NERDTree customizations --
@@ -234,7 +257,7 @@ vim.api.nvim_set_keymap('n', '<Bslash>', ':NERDTreeToggle<CR>', {noremap = true,
 
 vim.g.NERDCommentEmptyLines = 1
 vim.g.NERDTrimTrailingWhitespace = 1
-vim.g.NERDCompactSexyComs = 0
+vim.g.NERDCompactSexyComs = 1
 vim.g.NERDDefaultAlign = 'left'
 vim.g.NERDCustomDelimiters = { c = { left = '/**', right = '*/' } }
 vim.g.NERDSpaceDelims = 1

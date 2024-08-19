@@ -91,8 +91,6 @@ export PATH="/opt/homebrew/bin:$PATH"
 # Homebrew sqlite3
 export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
-# For rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
 
 # PostgreSQL
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
@@ -133,3 +131,6 @@ export GEM_HOME="$HOME/.gem"
 
 # Use ag for fzf
 export FZF_DEFAULT_COMMAND='ag -l --path-to-ignore ~/.gitignore --nocolor -g ""'
+
+# Hopefully fix forking issue with mac + ruby
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES

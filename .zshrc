@@ -1,7 +1,7 @@
 # For ENV variables such as $PATH, use ~/.zshenv
 # Everything else can go in here.
 
-source $HOME/.zshenv
+source ~/.zshenv
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -9,7 +9,7 @@ source $HOME/.zshenv
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#
+
 plugins=(git zsh-syntax-highlighting)
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -30,6 +30,7 @@ alias src='source ~/.zshrc && source ~/.zshenv'
 alias ls='ls -ahlG'
 alias rs='rails s'
 alias rc='rails c'
+alias k3000='kill -9 $(lsof -ti:3000)'
 
 # docker aliases
 alias dockerboom='docker system prune -a; docker rmi $(docker images -a -q); docker volume prune'
@@ -58,13 +59,20 @@ alias pull='git pull'
 
 # Workplace-specific workflows
 alias goodmorningut="git checkout main; git pull --prune; bundle install && yarn install --pure-lockfile && yarn install --check-files && yarn postinstall && bundle exec rake db:migrate db:test:prepare && git checkout db/structure.sql"
-alias yout="goodmorning"
+alias yout="goodmorningut"
 alias sk="bundle exec sidekiq -C config/sidekiq.yml"
 alias dbreset="bundle exec rake db:reset && bundle exec rake db:seed_convenience"
 alias webpack="bin/webpack-dev-server"
 
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(/opt/homebrew/bin/brew --prefix openssl@1.1)"
-eval "$(rbenv init - zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 . "$HOME/.cargo/env"
+
+# For ngrok
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
+
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
