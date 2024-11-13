@@ -18,6 +18,8 @@ source $ZSH/oh-my-zsh.sh
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 ZSH_THEME="agnoster"
 
+DEFAULT_USER="malak"
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -134,3 +136,5 @@ export FZF_DEFAULT_COMMAND='ag -l --path-to-ignore ~/.gitignore --nocolor -g ""'
 
 # Hopefully fix forking issue with mac + ruby
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+export GPG_TTY=$(tty)

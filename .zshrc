@@ -2,6 +2,7 @@
 # Everything else can go in here.
 
 source ~/.zshenv
+source ~/.zshenv.secrets
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -76,3 +77,16 @@ fi
 
 source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
 source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
+
+# libpq is keg-only, which means it was not symlinked into /opt/homebrew,
+# because conflicts with postgres formula.
+# 
+# If you need to have libpq first in your PATH, run:
+#   echo 'export PATH="/opt/homebrew/opt/libpq/bin:$PATH"' >> ~/.zshrc
+# 
+# For compilers to find libpq you may need to set:
+#   export LDFLAGS="-L/opt/homebrew/opt/libpq/lib"
+#   export CPPFLAGS="-I/opt/homebrew/opt/libpq/include"
+# 
+# For pkg-config to find libpq you may need to set:
+#   export PKG_CONFIG_PATH="/opt/homebrew/opt/libpq/lib/pkgconfig"
