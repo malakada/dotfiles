@@ -1,8 +1,8 @@
-return {
-  "echasnovski/mini.animate",
-  opts = {
-    cursor = {
-      enable = false,
-    }
-  }
-}
+-- return {
+--   "echasnovski/mini.animate",
+--   opts = {
+--     cursor = {
+--       enable = false,
+--     }
+--   }
+-- }
