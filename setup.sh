@@ -72,17 +72,32 @@ echo "Installing eslint globally..."
 npm install -g eslint
 
 echo "Configuring nvim..."
-echo "Creating virtual environment for nvim's python dependencies..."
+echo "-- Creating virtual environment for nvim's python dependencies..."
 /opt/homebrew/bin/python3 -m venv "${HOME}/.config/nvim/env"
 
-echo "Installing pynvim..."
-~/.config/nvim/env/bin/pip install pynvim
+echo "-- Installing ruby for nvim..."
+gem install neovim
+
+echo "-- Installing npm for nvim..."
+npm install -g neovim
+
+echo "-- Installing pynvim..."
+~/.config/nvim/env/bin/pip3 install pynvim
 
 if [ -d "${HOME}/.config/nvim" ]; then
 		echo "Found existing nvim directory, moving to nvim.old"
 		mv "${HOME}/.config/nvim" "${HOME}/.config/nvim.old"
 fi
 cp -r "./nvim" "${HOME}/.config/nvim"
+
+# Install things needed for nvim plugins....
+brew install pngpaste
+brew install luarocks
+brew install go
+brew install mactex
+brew install perl
+echo "Be sure to run `cpan` to setup perl environment!"
+cpan Neovim::Ext # this might not work, sorry future-me! :D
 
 echo "Installing Rails environment..."
 gem install bundler
@@ -94,6 +109,10 @@ RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" rbenv inst
 RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" rbenv install 3.2.3
 rbenv global 3.3.0
 gem install bundler
+
+# Postgres GUI
+echo "Installing Postgres GUI..."
+brew install --cask pgadmin4
 
 # install rust
 echo "Installing Rust..."

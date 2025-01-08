@@ -1,15 +1,110 @@
 return {
-  "brenoprata10/nvim-highlight-colors",
-  init = function()
-    vim.opt.termguicolors = true
-  end,
-  opts = {
-    render = "background",
-    virtual_symbol = "■",
-    virtual_symbol_position = "inline",
-    enable_tailwind = true,
-  },
-  config = function(_, opts)
-    require("nvim-highlight-colors").setup(opts)
-  end,
+	"brenoprata10/nvim-highlight-colors",
+	init = function()
+		vim.opt.termguicolors = true
+	end,
+	opts = {
+		render = "virtual", -- options: "background", "foreground", "virtual"
+		virtual_symbol = "■",
+		virtual_symbol_position = "eow", -- options: "inline", "eol", "eow".
+		virtual_symbol_prefix = " ", -- recommended to set when "eow"
+		virtual_symbol_suffix = "", -- recommended to set when "eow"
+		enable_tailwind = true,
+		custom_colors = {
+			{ label = "magnolia%-rose", color = "#814256" },
+			{ label = "magnolia%-pink", color = "rgb(219 154 143)" },
+			{ label = "magnolia%-sand", color = "rgb(242 233 225)" },
+			{ label = "magnolia%-gold", color = "rgb(236 204 110)" },
+			{ label = "magnolia%-brown", color = "rgb(217 129 58)" },
+			{ label = "magnolia%-green", color = "rgb(164 155 67)" },
+			{ label = "magnolia%-olive", color = "rgb(113 111 53)" },
+
+			{ label = "magnolia%-rose%-50", color = "rgb(242 236 238)" },
+			{ label = "magnolia%-rose%-100", color = "rgb(230 217 221)" },
+			{ label = "magnolia%-rose%-200", color = "rgb(205 179 187)" },
+			{ label = "magnolia%-rose%-300", color = "rgb(179 142 153)" },
+			{ label = "magnolia%-rose%-400", color = "rgb(154 105 119)" },
+			{ label = "magnolia%-rose%-500", color = "rgb(129 66 86)" },
+			{ label = "magnolia%-rose%-600", color = "rgb(103 53 69)" },
+			{ label = "magnolia%-rose%-700", color = "rgb(77 40 52)" },
+			{ label = "magnolia%-rose%-800", color = "rgb(65 33 43)" },
+			{ label = "magnolia%-rose%-900", color = "rgb(52 26 34)" },
+			{ label = "magnolia%-rose%-950", color = "rgb(39 20 26)" },
+
+			{ label = "magnolia%-pink%-50", color = "rgb(251 245 244)" },
+			{ label = "magnolia%-pink%-100", color = "rgb(244 225 221)" },
+			{ label = "magnolia%-pink%-200", color = "rgb(237 205 199)" },
+			{ label = "magnolia%-pink%-300", color = "rgb(233 194 188)" },
+			{ label = "magnolia%-pink%-400", color = "rgb(226 174 165)" },
+			{ label = "magnolia%-pink%-500", color = "rgb(219 154 143)" },
+			{ label = "magnolia%-pink%-600", color = "rgb(175 123 114)" },
+			{ label = "magnolia%-pink%-700", color = "rgb(131 92 86)" },
+			{ label = "magnolia%-pink%-800", color = "rgb(88 62 57)" },
+			{ label = "magnolia%-pink%-900", color = "rgb(66 46 43)" },
+			{ label = "magnolia%-pink%-950", color = "rgb(44 31 29)" },
+
+			{ label = "magnolia%-sand%-50", color = "rgb(250 246 243)" },
+			{ label = "magnolia%-sand%-100", color = "rgb(249 244 240)" },
+			{ label = "magnolia%-sand%-200", color = "rgb(247 242 238)" },
+			{ label = "magnolia%-sand%-300", color = "rgb(246 240 234)" },
+			{ label = "magnolia%-sand%-400", color = "rgb(246 237 231)" },
+			{ label = "magnolia%-sand%-500", color = "rgb(242 233 225)" },
+			{ label = "magnolia%-sand%-600", color = "rgb(195 186 180)" },
+			{ label = "magnolia%-sand%-700", color = "rgb(145 140 136)" },
+			{ label = "magnolia%-sand%-800", color = "rgb(121 117 113)" },
+			{ label = "magnolia%-sand%-900", color = "rgb(72 70 68)" },
+			{ label = "magnolia%-sand%-950", color = "rgb(48 47 45)" },
+
+			{ label = "magnolia%-gold%-50", color = "rgb(253 250 241)" },
+			{ label = "magnolia%-gold%-100", color = "rgb(251 245 226)" },
+			{ label = "magnolia%-gold%-200", color = "rgb(247 235 197)" },
+			{ label = "magnolia%-gold%-300", color = "rgb(244 224 168)" },
+			{ label = "magnolia%-gold%-400", color = "rgb(240 214 139)" },
+			{ label = "magnolia%-gold%-500", color = "rgb(236 204 110)" },
+			{ label = "magnolia%-gold%-600", color = "rgb(189 163 88)" },
+			{ label = "magnolia%-gold%-700", color = "rgb(165 143 77)" },
+			{ label = "magnolia%-gold%-800", color = "rgb(142 122 66)" },
+			{ label = "magnolia%-gold%-900", color = "rgb(94 82 44)" },
+			{ label = "magnolia%-gold%-950", color = "rgb(71 61 33)" },
+
+			{ label = "magnolia%-brown%-50", color = "rgb(250 245 242)" },
+			{ label = "magnolia%-brown%-100", color = "rgb(245 229 218)" },
+			{ label = "magnolia%-brown%-200", color = "rgb(238 204 178)" },
+			{ label = "magnolia%-brown%-300", color = "rgb(231 179 138)" },
+			{ label = "magnolia%-brown%-400", color = "rgb(224 154 98)" },
+			{ label = "magnolia%-brown%-500", color = "rgb(217 129 58)" },
+			{ label = "magnolia%-brown%-600", color = "rgb(174 103 46)" },
+			{ label = "magnolia%-brown%-700", color = "rgb(131 77 34)" },
+			{ label = "magnolia%-brown%-800", color = "rgb(88 52 23)" },
+			{ label = "magnolia%-brown%-900", color = "rgb(66 39 17)" },
+			{ label = "magnolia%-brown%-950", color = "rgb(44 26 11)" },
+
+			{ label = "magnolia%-green%-50", color = "rgb(246 245 236)" },
+			{ label = "magnolia%-green%-100", color = "rgb(237 235 217)" },
+			{ label = "magnolia%-green%-200", color = "rgb(219 214 180)" },
+			{ label = "magnolia%-green%-300", color = "rgb(200 195 142)" },
+			{ label = "magnolia%-green%-400", color = "rgb(182 175 105)" },
+			{ label = "magnolia%-green%-500", color = "rgb(164 155 67)" },
+			{ label = "magnolia%-green%-600", color = "rgb(131 124 54)" },
+			{ label = "magnolia%-green%-700", color = "rgb(98 93 40)" },
+			{ label = "magnolia%-green%-800", color = "rgb(66 62 27)" },
+			{ label = "magnolia%-green%-900", color = "rgb(49 47 20)" },
+			{ label = "magnolia%-green%-950", color = "rgb(33 31 13)" },
+
+			{ label = "magnolia%-olive%-50", color = "rgb(227 226 215)" },
+			{ label = "magnolia%-olive%-100", color = "rgb(212 212 194)" },
+			{ label = "magnolia%-olive%-200", color = "rgb(184 183 154)" },
+			{ label = "magnolia%-olive%-300", color = "rgb(170 169 134)" },
+			{ label = "magnolia%-olive%-400", color = "rgb(141 140 93)" },
+			{ label = "magnolia%-olive%-500", color = "rgb(113 111 53)" },
+			{ label = "magnolia%-olive%-600", color = "rgb(90 89 42)" },
+			{ label = "magnolia%-olive%-700", color = "rgb(68 67 32)" },
+			{ label = "magnolia%-olive%-800", color = "rgb(57 56 27)" },
+			{ label = "magnolia%-olive%-900", color = "rgb(45 44 21)" },
+			{ label = "magnolia%-olive%-950", color = "rgb(34 33 16)" },
+		},
+	},
+	config = function(_, opts)
+		require("nvim-highlight-colors").setup(opts)
+	end,
 }
