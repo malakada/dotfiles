@@ -1,5 +1,6 @@
 local M = {
 	colors = require("utils.colors"),
+	fzf = require("utils.fzf"),
 	icons = require("utils.icons"),
 	lsp = require("utils.lsp"),
 	redir = require("utils.redir"),

@@ -95,6 +95,11 @@ brew install pngpaste
 brew install luarocks
 brew install go
 brew install mactex
+brew install beautysh
+brew install fzf
+brew install chafa
+brew install viu
+brew install jstkdng/programs/ueberzugpp
 brew install perl
 echo "Be sure to run `cpan` to setup perl environment!"
 cpan Neovim::Ext # this might not work, sorry future-me! :D
