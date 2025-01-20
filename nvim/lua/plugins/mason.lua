@@ -23,6 +23,8 @@ return {
 				"cssls",
 				"emmet_language_server",
 				"eslint",
+				"erb-formatter",
+				"erb-lint",
 				"jsonls",
 				"lua_ls",
 				"rubocop",

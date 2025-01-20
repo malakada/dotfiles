@@ -130,11 +130,11 @@ return {
 				--   },
 				-- },
 			},
-			buffers = {
-				actions = {
-					["ctrl-x"] = { actions.buf_del, actions.resume },
-				},
-			},
+			-- buffers = {
+			--   actions = {
+			--     ["ctrl-x"] = { actions.buf_del, actions.resume },
+			--   },
+			-- },
 		}
 	end,
 }

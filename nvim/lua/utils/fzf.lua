@@ -102,7 +102,7 @@ function M.scratch_select()
 				":: <%s> to %s | <%s> to %s",
 				ansi_from_hl("FzfLuaHeaderBind", "enter"),
 				ansi_from_hl("FzfLuaHeaderText", "Select Scratch"),
-				ansi_from_hl("FzfLuaHeaderBind", "ctrl-x"),
+				-- ansi_from_hl("FzfLuaHeaderBind", "ctrl-x"),
 				ansi_from_hl("FzfLuaHeaderText", "Delete Scratch")
 			),
 		},
@@ -120,15 +120,15 @@ function M.scratch_select()
 					border = "single",
 				})
 			end,
-			["ctrl-x"] = {
-				function(selected)
-					local selected_item = selected[1]
-					local item = item_map[selected_item]
-					os.remove(item.file)
-					vim.notify("Deleted scratch file: " .. item.file)
-					M.scratch_select()
-				end,
-			},
+			-- ["ctrl-x"] = {
+			--   function(selected)
+			--     local selected_item = selected[1]
+			--     local item = item_map[selected_item]
+			--     os.remove(item.file)
+			--     vim.notify("Deleted scratch file: " .. item.file)
+			--     M.scratch_select()
+			--   end,
+			-- },
 		},
 	})
 end

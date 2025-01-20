@@ -25,21 +25,6 @@ return {
 			zsh = { "beautysh" },
 			yaml = { "prettier" },
 		},
-		formatters = {
-			rubocop = {
-				args = {
-					"--server",
-					"--fix-layout",
-					"--autocorrect-all",
-					"--format",
-					"files",
-					"--stderr",
-					"--stdin",
-					"$FILENAME",
-				},
-				stdin = true,
-			},
-		},
 		format_on_save = function(bufnr)
 			-- Disable autoformat for files in a certain path
 			local bufname = vim.api.nvim_buf_get_name(bufnr)
@@ -52,14 +37,37 @@ return {
 				lsp_fallback = true,
 			}
 		end,
-		format_after_save = {
-			lsp_fallback = true,
-		},
 		log_level = vim.log.levels.DEBUG,
 	},
 	config = function(_, opts)
 		local conform = require("conform")
 		conform.setup(opts)
+
+		-- Customize rubocop args
+		require("conform.formatters.rubocop").args = function()
+			local rubocop_config = vim.fn.findfile(".rubocop.yml", ".;")
+
+			if vim.fn.filereadable(rubocop_config) == 1 then
+				return {
+					"--config",
+					rubocop_config,
+					"--autocorrect-all",
+					"--format",
+					"quiet",
+					"--stderr",
+					"--stdin",
+					"$FILENAME",
+				}
+			else
+				return {
+					"--fix-layout",
+					"--auto-correct",
+					"--stderr",
+					"--stdin",
+					"$FILENAME",
+				}
+			end
+		end
 
 		-- Customize prettier args
 		require("conform.formatters.prettier").args = function(_, ctx)

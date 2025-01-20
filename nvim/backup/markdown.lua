@@ -1,5 +1,3 @@
-local desc = Utils.plugin_keymap_desc("markdown preview")
-
 return {
 	{
 		"lukas-reineke/headlines.nvim",
@@ -38,7 +36,8 @@ return {
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		keys = {
-			{ "<leader>mp", ":MarkdownPreview<CR>", mode = "n", desc = desc("Preview") },
+			{ "<leader>mp", ":MarkdownPreview<CR>", mode = "n", desc = "Markdown preview"
+      },
 		},
 	},
 }

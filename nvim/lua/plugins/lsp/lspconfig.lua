@@ -54,8 +54,8 @@ return {
 			lua_ls = require("plugins.lsp.servers.lua_ls").setup(capabilities),
 			vtsls = require("plugins.lsp.servers.vtsls").setup(capabilities),
 			stylelint_lsp = require("plugins.lsp.servers.stylelint_lsp").setup(capabilities),
-			-- ruby_lsp = require("plugins.lsp.servers.ruby_lsp").setup(capabilities),
-			-- rubocop = require("plugins.lsp.servers.rubocop").setup(capabilities),
+			ruby_lsp = require("plugins.lsp.servers.ruby_lsp").setup(capabilities),
+			rubocop = require("plugins.lsp.servers.rubocop").setup(capabilities),
 		}
 
 		for server_name, server_config in pairs(lsp_servers) do
