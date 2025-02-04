@@ -2,8 +2,6 @@
 # for aliases, functions, options, key bindings, etc use ~/.zshrc
 
 # Path to oh-my-zsh installation
-export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -29,7 +27,7 @@ DEFAULT_USER="malak"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -103,6 +101,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # NVM
 export PATH="/opt/homebrew/opt/nvm:$PATH"
 
+# Ruby
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="gem environment gemdir/bin:$PATH"
+
 #################
 # Configuration #
 #################
@@ -138,3 +140,6 @@ export FZF_DEFAULT_COMMAND='ag -l --path-to-ignore ~/.gitignore --nocolor -g ""'
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 export GPG_TTY=$(tty)
+
+# Don't display a window title in tmux
+export DISABLE_AUTO_TITLE=true

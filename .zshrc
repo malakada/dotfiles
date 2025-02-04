@@ -1,17 +1,29 @@
 # For ENV variables such as $PATH, use ~/.zshenv
 # Everything else can go in here.
 
-source ~/.zshenv
-source ~/.zshenv.secrets
-
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
+# These need to be defined BEFORE sourcing Oh My Zsh
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(
+  git-prompt
+  gitfast
+  lol
+  tmux
+  tmuxinator
+  zsh-syntax-highlighting
+)
+
+
+export ZSH="$HOME/.oh-my-zsh"
+source ~/.zshenv.secrets
+source $ZSH/oh-my-zsh.sh
+
+echo "Welcome to Zsh!"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -27,7 +39,7 @@ bindkey '\e[B' history-search-forward
 
 # aliases!
 alias als='nvim ~/.zshrc'
-alias src='source ~/.zshrc && source ~/.zshenv'
+alias src='source ~/.zshrc'
 alias ls='ls -ahlG'
 alias rs='rails s'
 alias rc='rails c'
@@ -55,6 +67,7 @@ alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias mstr='git checkout develop'
 alias grm='git rebase develop'
+alias grb='git rebase main'
 alias shit='!CURRENT=$(git rev-parse --abbrev-ref HEAD) && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 alias pull='git pull'
 
@@ -90,3 +103,15 @@ source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
 # 
 # For pkg-config to find libpq you may need to set:
 #   export PKG_CONFIG_PATH="/opt/homebrew/opt/libpq/lib/pkgconfig"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/malak/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/malak/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/malak/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/malak/google-cloud-sdk/completion.zsh.inc'; fi
+
+PATH="/Users/malak/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/malak/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/malak/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/malak/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/malak/perl5"; export PERL_MM_OPT;

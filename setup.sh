@@ -6,10 +6,10 @@ echo "Starting setup..."
 # Check for and install Homebrew
 if ! command -v brew &> /dev/null
 then
-    echo "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-    echo "Homebrew already installed. Skipping..."
+  echo "Homebrew already installed. Skipping..."
 fi
 
 # Install Hack Nerd Font
@@ -32,11 +32,11 @@ brew install --cask notunes
 # Copy .zshrc, .zshenv, and init.lua from your dotfiles repository
 echo "Configuring zsh..."
 for file in .zshrc .zshenv; do
-    if [ -f "${HOME}/${file}" ]; then
-        echo "Found existing ${file}, moving to ${file}.old"
-        mv "${HOME}/${file}" "${HOME}/${file}.old"
-    fi
-    cp "./${file}" "${HOME}/${file}"
+  if [ -f "${HOME}/${file}" ]; then
+    echo "Found existing ${file}, moving to ${file}.old"
+    mv "${HOME}/${file}" "${HOME}/${file}.old"
+  fi
+  cp "./${file}" "${HOME}/${file}"
 done
 
 echo "Installing Karabiner-Elements..."
@@ -49,13 +49,13 @@ mkdir -p "${KARABINER_CONFIG_DIR}"
 
 # Check if Karabiner config file exists
 if [ ! -f "${KARABINER_CONFIG_FILE}" ]; then
-    echo "Karabiner-Elements config not found. Creating a default config file..."
-    # Create a new default config file if it doesn't exist
-    cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
+  echo "Karabiner-Elements config not found. Creating a default config file..."
+  # Create a new default config file if it doesn't exist
+  cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
 else
-    echo "Karabiner-Elements config found, moving to karabiner.json.old"
-    mv "${KARABINER_CONFIG_FILE}" "${KARABINER_CONFIG_FILE}.old"
-    cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
+  echo "Karabiner-Elements config found, moving to karabiner.json.old"
+  mv "${KARABINER_CONFIG_FILE}" "${KARABINER_CONFIG_FILE}.old"
+  cp "./karabiner/karabiner.json" "${KARABINER_CONFIG_FILE}"
 fi
 
 echo "Karabiner-Elements setup complete."
@@ -71,6 +71,12 @@ softwareupdate --install-rosetta --agree-to-license
 echo "Installing eslint globally..."
 npm install -g eslint
 
+if [ -d "${HOME}/.config/nvim" ]; then
+  echo "Found existing nvim directory, moving to nvim.old"
+  mv "${HOME}/.config/nvim" "${HOME}/.config/nvim.old"
+fi
+cp -r "./nvim" "${HOME}/.config/nvim"
+
 echo "Configuring nvim..."
 echo "-- Creating virtual environment for nvim's python dependencies..."
 /opt/homebrew/bin/python3 -m venv "${HOME}/.config/nvim/env"
@@ -84,11 +90,6 @@ npm install -g neovim
 echo "-- Installing pynvim..."
 ~/.config/nvim/env/bin/pip3 install pynvim
 
-if [ -d "${HOME}/.config/nvim" ]; then
-		echo "Found existing nvim directory, moving to nvim.old"
-		mv "${HOME}/.config/nvim" "${HOME}/.config/nvim.old"
-fi
-cp -r "./nvim" "${HOME}/.config/nvim"
 
 # Install things needed for nvim plugins....
 brew install pngpaste
@@ -122,6 +123,20 @@ brew install --cask pgadmin4
 # install rust
 echo "Installing Rust..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Configure tmuxinator
+echo "Adding tmuxinator templates..."
+if [ -d "${HOME}/.config/tmuxinator" ]; then
+  echo "Found existing tmuxinator directory, moving to ~/.config/tmuxinator.old"
+  mv "${HOME}/.config/tmuxinator" "${HOME}/.config/tmuxinator.old"
+fi
+cp -r "./tmuxinator" "${HOME}/.config/tmuxinator"
+
+if [ -d "${HOME}/.tmux.conf" ]; then
+  echo "Found existing tmuxinator config file, moving to ~/.tmux.conf.old"
+  mv "${HOME}/.config/tmuxinator" "${HOME}/.tmux.conf.old"
+fi
+cp "./.tmux.conf" "${HOME}/.tmux.conf"
 
 echo "Setup complete\!"
 echo " "
