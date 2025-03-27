@@ -22,7 +22,7 @@ rm "$FONT_DIR/Hack.zip"
 # Update Homebrew and install packages
 echo "Updating Homebrew and installing packages..."
 brew update
-brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm openssl@1.1 libpq ripgrep fd
+brew install yarn npm nvim rbenv tree the_silver_searcher fzf z python nvm openssl@1.1 libpq ripgrep fd tmuxinator
 $(brew --prefix)/opt/fzf/install # Install shell extensions for fzf
 
 # Disable Apple Music because yuck
