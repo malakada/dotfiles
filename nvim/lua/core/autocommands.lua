@@ -48,3 +48,25 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	},
 	callback = clean_extra_spaces,
 })
+
+----------------------------------------------------
+-- Close nvim if the last buffer is just NERDTree --
+----------------------------------------------------
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*",
+	callback = function()
+		if vim.fn.tabpagenr("$") == 1 and vim.fn.winnr("$") == 1 and vim.b.NERDTree and vim.b.NERDTree.isTabTree() then
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":quit<CR>:<BS>", true, true, true), "n", false)
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*",
+	callback = function()
+		if vim.fn.winnr("$") == 1 and vim.b.NERDTree and vim.b.NERDTree.isTabTree() then
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":quit<CR>:<BS>", true, true, true), "n", false)
+		end
+	end,
+})

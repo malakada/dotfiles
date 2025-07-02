@@ -9,8 +9,8 @@ return {
 			css = { "prettier" },
 			erb = { "erb_format" },
 			eruby = { "erb_format" },
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-			javascriptreact = { "prettier" },
+			-- javascript = { "prettierd", "prettier", stop_after_first = true },
+			-- javascriptreact = { "prettier" },
 			lua = { "stylua" },
 			ruby = { "rubocop" }, --, "htmlbeautifier" },
 			scss = { "prettier" },
@@ -23,7 +23,7 @@ return {
 			markdown = { "prettier" },
 			sh = { "beautysh" },
 			zsh = { "beautysh" },
-			yaml = { "prettier" },
+			yaml = { "yamlfix" },
 		},
 		format_on_save = function(bufnr)
 			-- Disable autoformat for files in a certain path
@@ -44,22 +44,39 @@ return {
 		conform.setup(opts)
 
 		-- Customize rubocop args
+		require("conform.formatters.rubocop").command = "bundle"
 		require("conform.formatters.rubocop").args = function()
 			local rubocop_config = vim.fn.findfile(".rubocop.yml", ".;")
 
 			if vim.fn.filereadable(rubocop_config) == 1 then
 				return {
-					"--config",
-					rubocop_config,
-					"--autocorrect-all",
-					"--format",
+					"exec",
+					"rubocop",
+					-- "--config",
+					-- rubocop_config,
+					-- "--autocorrect-all",
+					-- "--format",
+					"-A",
+					"-f",
 					"quiet",
+					-- "--force-exclusion",
 					"--stderr",
 					"--stdin",
 					"$FILENAME",
+
+					-- rubocop_config,
+					-- "--format",
+					-- "quiet",
 				}
 			else
 				return {
+					-- "exec",
+					-- "rubocop",
+					-- "--format",
+					-- "json",
+					-- "--force-exclusion",
+					-- "%filepath",
+
 					"--fix-layout",
 					"--auto-correct",
 					"--stderr",
@@ -108,6 +125,18 @@ return {
 			end
 
 			return args
+		end
+
+		require("conform.formatters.erb_format").args = function()
+			return {
+				format_on_save = function(bufnr)
+					-- Disable autoformat for yaml or yml files
+					local bufname = vim.api.nvim_buf_get_name(bufnr)
+					if bufname:match("%.ya?ml$") then
+						return
+					end
+				end,
+			}
 		end
 
 		conform.formatters.beautysh = {

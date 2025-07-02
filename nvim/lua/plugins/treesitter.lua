@@ -32,6 +32,7 @@ return {
 			"luadoc",
 			"markdown",
 			"markdown_inline",
+			"php",
 			"regex",
 			"ruby",
 			"scss",
